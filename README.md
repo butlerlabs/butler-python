@@ -99,3 +99,28 @@ import butler
 from butler.apis import *
 from butler.models import *
 ```
+## Maintain
+```sh
+pipenv install
+```
+
+To regenerate code to account for updates to REST API:
+```sh
+openapi-generator generate -i https://app.butlerlabs.ai/api/docs-json -g python --package-name butler
+```
+and make manual updates to `butler/__init.py` if needed
+
+To publish a new version:
+
+Update `setup.py` to have a new version number
+
+```sh
+# build packages
+python -m build
+
+# upload to test pypi
+python -m twine upload --repository testpypi --skip-existing dist/* --verbose
+
+# Upload to real pypi if things checkout
+python -m twine upload --skip-existing dist/* --verbose
+```
