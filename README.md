@@ -38,18 +38,11 @@ All URIs are relative to *https://app.butlerlabs.ai*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AppsApi* | [**get_app_run_status**](docs/AppsApi.md#get_app_run_status) | **GET** /api/apps/app_runs/{appRunId}/status | Get the status of an extraction job started by the upload_documents endpoint
-*AppsApi* | [**get_document_extraction_results**](docs/AppsApi.md#get_document_extraction_results) | **GET** /api/apps/app_runs/{appRunId}/document_extraction | Get extracted results of an extraction job started by the upload_documents endpoint after it completes
-*AppsApi* | [**upload_documents**](docs/AppsApi.md#upload_documents) | **POST** /api/apps/{appId}/upload_documents | Upload documents (PDFs, and image formats) to your app to start an extraction job. Returns an appRunId that can be used to check the status of the extraction job, and get its results
-*AuthApi* | [**login**](docs/AuthApi.md#login) | **POST** /api/auth | Authenticates and authorizes the user to access the API
-*QueuesApi* | [**get_extraction_results**](docs/QueuesApi.md#get_extraction_results) | **GET** /api/queues/{queueId}/extraction_results | Get paginated list of extraction results for documents matching the query params
 *QueuesApi* | [**upload_documents_to_queue**](docs/QueuesApi.md#upload_documents_to_queue) | **POST** /api/queues/{queueId}/uploads | Upload documents to the queue specified by &lt;queueId&gt; for processing
 
 
 ## Documentation For Models
 
- - [AppRunStatus](docs/AppRunStatus.md)
- - [AppRunStatusDto](docs/AppRunStatusDto.md)
  - [DocExConfidence](docs/DocExConfidence.md)
  - [DocumentExtractionResultsDto](docs/DocumentExtractionResultsDto.md)
  - [DocumentStatus](docs/DocumentStatus.md)
@@ -61,7 +54,6 @@ Class | Method | HTTP request | Description
  - [ExtractionRangeDto](docs/ExtractionRangeDto.md)
  - [ExtractionResultsDto](docs/ExtractionResultsDto.md)
  - [ExtractionResultsSortBy](docs/ExtractionResultsSortBy.md)
- - [LoginBodyDto](docs/LoginBodyDto.md)
  - [PaginatedExtractionResultsDto](docs/PaginatedExtractionResultsDto.md)
  - [SortOrder](docs/SortOrder.md)
  - [UploadDocumentResponseDto](docs/UploadDocumentResponseDto.md)
