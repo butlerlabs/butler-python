@@ -1,6 +1,5 @@
-# butler
-
-      Welcome to Butler's Python SDK
+# Butler
+Welcome to [Butler's Python SDK](https://butlerlabs.ai)
 
       Butler APIs are built on top of the OpenAPI 3.0 standard, and the SDK provides convenience
       functions to make programming easier
