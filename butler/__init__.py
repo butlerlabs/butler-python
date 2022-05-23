@@ -10,10 +10,11 @@
 """
 
 
-__version__ = "1.0.0"
+__version__ = "0.0.2"
 
 # import ApiClient
 from butler.api_client import ApiClient
+from butler.client import Client
 
 # import Configuration
 from butler.configuration import Configuration
