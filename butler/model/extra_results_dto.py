@@ -72,9 +72,9 @@ class ExtraResultsDto(ModelNormal):
                 and the value is attribute type.
         """
         return {
-            'line_blocks': ([str], none_type,),  # noqa: E501
-            'form_fields': ([str], none_type,),  # noqa: E501
-            'tables': ([str], none_type,),  # noqa: E501
+            'line_blocks': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type,),  # noqa: E501
+            'form_fields': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type,),  # noqa: E501
+            'tables': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -134,9 +134,9 @@ class ExtraResultsDto(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            line_blocks ([str], none_type): Extra lineBlocks, only present if requested. If this is an old document, or extra results otherwise failed to generate, then the value will be null. [optional]  # noqa: E501
-            form_fields ([str], none_type): Extra formFields, only present if requested. If this is an old document, or extra results otherwise failed to generate, then the value will be null. [optional]  # noqa: E501
-            tables ([str], none_type): Extra tables, only present if requested. If this is an old document, or extra results otherwise failed to generate, then the value will be null. [optional]  # noqa: E501
+            line_blocks ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): Extra lineBlocks, only present if requested. If this is an old document, or extra results otherwise failed to generate, then the value will be null. [optional]  # noqa: E501
+            form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): Extra formFields, only present if requested. If this is an old document, or extra results otherwise failed to generate, then the value will be null. [optional]  # noqa: E501
+            tables ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): Extra tables, only present if requested. If this is an old document, or extra results otherwise failed to generate, then the value will be null. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

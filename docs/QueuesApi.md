@@ -4,9 +4,94 @@ All URIs are relative to *https://app.butlerlabs.ai*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**extract_file**](QueuesApi.md#extract_file) | **POST** /api/queues/{queueId}/documents | Upload a single document to the queue specified by &lt;queueId&gt; and returns the extracted results
 [**get_extraction_results**](QueuesApi.md#get_extraction_results) | **GET** /api/queues/{queueId}/extraction_results | Get paginated list of extraction results for documents matching the query params
 [**upload_documents_to_queue**](QueuesApi.md#upload_documents_to_queue) | **POST** /api/queues/{queueId}/uploads | Upload documents to the queue specified by &lt;queueId&gt; for processing
 
+
+# **extract_file**
+> ExtractionResultsDto extract_file(queue_id)
+
+Upload a single document to the queue specified by <queueId> and returns the extracted results
+
+### Example
+
+* Bearer (JWT) Authentication (bearer):
+```python
+import time
+import butler
+from butler.api import queues_api
+from butler.model.extraction_results_dto import ExtractionResultsDto
+from pprint import pprint
+# Defining the host is optional and defaults to https://app.butlerlabs.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = butler.Configuration(
+    host = "https://app.butlerlabs.ai"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): bearer
+configuration = butler.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
+
+# Enter a context with an instance of the API client
+with butler.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = queues_api.QueuesApi(api_client)
+    queue_id = "queueId_example" # str | ID of the queue
+    file = open('/path/to/file', 'rb') # file_type |  (optional)
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Upload a single document to the queue specified by <queueId> and returns the extracted results
+        api_response = api_instance.extract_file(queue_id)
+        pprint(api_response)
+    except butler.ApiException as e:
+        print("Exception when calling QueuesApi->extract_file: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # Upload a single document to the queue specified by <queueId> and returns the extracted results
+        api_response = api_instance.extract_file(queue_id, file=file)
+        pprint(api_response)
+    except butler.ApiException as e:
+        print("Exception when calling QueuesApi->extract_file: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **queue_id** | **str**| ID of the queue |
+ **file** | **file_type**|  | [optional]
+
+### Return type
+
+[**ExtractionResultsDto**](ExtractionResultsDto.md)
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns extracted results for the document |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_extraction_results**
 > PaginatedExtractionResultsDto get_extraction_results(queue_id, upload_id)
@@ -188,7 +273,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Returns the upload id for the initiaed upload |  -  |
+**200** | Returns the upload id for the initiated upload |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

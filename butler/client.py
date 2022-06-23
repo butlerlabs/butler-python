@@ -1,5 +1,3 @@
-from pprint import pprint
-import time
 from butler.api.queues_api import QueuesApi
 
 from butler.api_client import ApiClient
@@ -21,23 +19,10 @@ class Client(ApiClient):
         """
         Uploads a supported file (PDF, PNG, and JPG) to the Butler API and fetches results
 
-        Limitations: Function times out in 30 seconds. Lower the number of pages in your fil
-        if it times out.
+        Limitations: Function times out in 30 seconds, works on PDFs of sizes up to 5 pages
         """
-        upload_id = None
         with open(file_path, 'rb') as f:
-            upload_id = QueuesApi(self).upload_documents_to_queue(
+            return QueuesApi(self).extract_file(
                 queue_id = queue_id,
-                files = [f]
-            ).upload_id
-
-        for i in range(0, 30):
-            res = QueuesApi(self).get_extraction_results(
-                queue_id = queue_id,
-                upload_id = upload_id
-            ).items[0]
-
-            if str(res.document_status) == 'Completed':
-                return res
-
-            time.sleep(1)
+                file = f
+            )

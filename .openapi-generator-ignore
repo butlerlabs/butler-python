@@ -21,6 +21,11 @@
 #docs/*.md
 
 # Ignore init.py
-#butler/__init__.py
+butler/__init__.py
+butler/client.py
+setup.py
+README.md
+.gitignore
+requirements.txt
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
