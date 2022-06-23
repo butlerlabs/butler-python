@@ -6,10 +6,10 @@ name = "pypi"
 [packages]
 python-dateutil = ">=2.5.3"
 urllib3 = ">=1.25.3"
-build = "*"
-twine = "*"
 
 [dev-packages]
+build = "*"
+twine = "*"
 
 [requires]
 python_version = "3.8"

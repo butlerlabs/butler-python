@@ -119,7 +119,7 @@ class DocumentExtractionResultsDto(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, id, file_name, mime_type, document_type, extracted_fields, tables, confidence_score, *args, **kwargs):  # noqa: E501
+    def __init__(self, id, file_name, mime_type, document_type, extracted_fields, tables, *args, **kwargs):  # noqa: E501
         """DocumentExtractionResultsDto - a model defined in OpenAPI
 
         Args:
@@ -129,7 +129,6 @@ class DocumentExtractionResultsDto(ModelNormal):
             document_type (str):
             extracted_fields ([ExtractedFieldDto]):
             tables ([ExtractedTableDto]):
-            confidence_score (DocExConfidence):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -162,6 +161,7 @@ class DocumentExtractionResultsDto(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            confidence_score (DocExConfidence): [optional]  # noqa: E501
             extraction_range (object): Page range that extraction ran on. Only populated if the document was filtered. [optional]  # noqa: E501
         """
 
@@ -194,7 +194,6 @@ class DocumentExtractionResultsDto(ModelNormal):
         self.document_type = document_type
         self.extracted_fields = extracted_fields
         self.tables = tables
-        self.confidence_score = confidence_score
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
