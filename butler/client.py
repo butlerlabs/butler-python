@@ -15,14 +15,14 @@ class Client(ApiClient):
             )
         )
 
-    def extract_file(self, file_path: str, queue_id: str) -> ExtractionResultsDto:
+    def extract_document(self, file_path: str, queue_id: str) -> ExtractionResultsDto:
         """
         Uploads a supported file (PDF, PNG, and JPG) to the Butler API and fetches results
 
         Limitations: Function times out in 30 seconds, works on PDFs of sizes up to 5 pages
         """
         with open(file_path, 'rb') as f:
-            return QueuesApi(self).extract_file(
+            return QueuesApi(self).extract_document(
                 queue_id = queue_id,
                 file = f
             )

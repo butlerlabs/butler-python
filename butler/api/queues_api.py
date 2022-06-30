@@ -40,7 +40,7 @@ class QueuesApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-        def __extract_file(
+        def __extract_document(
             self,
             queue_id,
             **kwargs
@@ -50,7 +50,7 @@ class QueuesApi(object):
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
 
-            >>> thread = api.extract_file(queue_id, async_req=True)
+            >>> thread = api.extract_document(queue_id, async_req=True)
             >>> result = thread.get()
 
             Args:
@@ -106,14 +106,14 @@ class QueuesApi(object):
                 queue_id
             return self.call_with_http_info(**kwargs)
 
-        self.extract_file = _Endpoint(
+        self.extract_document = _Endpoint(
             settings={
                 'response_type': (ExtractionResultsDto,),
                 'auth': [
                     'bearer'
                 ],
                 'endpoint_path': '/api/queues/{queueId}/documents',
-                'operation_id': 'extract_file',
+                'operation_id': 'extract_document',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -163,7 +163,7 @@ class QueuesApi(object):
                 ]
             },
             api_client=api_client,
-            callable=__extract_file
+            callable=__extract_document
         )
 
         def __get_extraction_results(

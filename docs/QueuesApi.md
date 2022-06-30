@@ -4,13 +4,13 @@ All URIs are relative to *https://app.butlerlabs.ai*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**extract_file**](QueuesApi.md#extract_file) | **POST** /api/queues/{queueId}/documents | Upload a single document to the queue specified by &lt;queueId&gt; and returns the extracted results
+[**extract_document**](QueuesApi.md#extract_document) | **POST** /api/queues/{queueId}/documents | Upload a single document to the queue specified by &lt;queueId&gt; and returns the extracted results
 [**get_extraction_results**](QueuesApi.md#get_extraction_results) | **GET** /api/queues/{queueId}/extraction_results | Get paginated list of extraction results for documents matching the query params
 [**upload_documents_to_queue**](QueuesApi.md#upload_documents_to_queue) | **POST** /api/queues/{queueId}/uploads | Upload documents to the queue specified by &lt;queueId&gt; for processing
 
 
-# **extract_file**
-> ExtractionResultsDto extract_file(queue_id)
+# **extract_document**
+> ExtractionResultsDto extract_document(queue_id)
 
 Upload a single document to the queue specified by <queueId> and returns the extracted results
 
@@ -49,19 +49,19 @@ with butler.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     try:
         # Upload a single document to the queue specified by <queueId> and returns the extracted results
-        api_response = api_instance.extract_file(queue_id)
+        api_response = api_instance.extract_document(queue_id)
         pprint(api_response)
     except butler.ApiException as e:
-        print("Exception when calling QueuesApi->extract_file: %s\n" % e)
+        print("Exception when calling QueuesApi->extract_document: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
         # Upload a single document to the queue specified by <queueId> and returns the extracted results
-        api_response = api_instance.extract_file(queue_id, file=file)
+        api_response = api_instance.extract_document(queue_id, file=file)
         pprint(api_response)
     except butler.ApiException as e:
-        print("Exception when calling QueuesApi->extract_file: %s\n" % e)
+        print("Exception when calling QueuesApi->extract_document: %s\n" % e)
 ```
 
 
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Returns extracted results for the document |  -  |
+**201** | Returns extracted results for the document |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -273,7 +273,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Returns the upload id for the initiated upload |  -  |
+**201** | Returns the upload id for the initiated upload |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
