@@ -28,7 +28,7 @@ api_key = '<api-key>'
 # Get Queue ID from https://docs.butlerlabs.ai/reference/uploading-documents-to-the-rest-api#go-to-the-model-details-page
 queue_id = '<queue_id>'
 
-response = Client(api_key).extract_file('example.pdf', queue_id)
+response = Client(api_key).extract_document('example.pdf', queue_id)
 print(response)
 ```
 
