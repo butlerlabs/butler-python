@@ -189,6 +189,9 @@ with butler.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = apps_api.AppsApi(api_client)
     app_id = "appId_example" # str | 
+    extra_results = [
+        "LineBlocks",
+    ] # [str] | Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default (optional)
     files = open('/path/to/file', 'rb') # [file_type] |  (optional)
 
     # example passing only required values which don't have defaults set
@@ -202,7 +205,7 @@ with butler.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Upload documents (PDFs, and image formats) to your app to start an extraction job. Returns an appRunId that can be used to check the status of the extraction job, and get its results
-        api_instance.upload_documents(app_id, files=files)
+        api_instance.upload_documents(app_id, extra_results=extra_results, files=files)
     except butler.ApiException as e:
         print("Exception when calling AppsApi->upload_documents: %s\n" % e)
 ```
@@ -213,6 +216,7 @@ with butler.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **app_id** | **str**|  |
+ **extra_results** | **[str]**| Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default | [optional]
  **files** | **[file_type]**|  | [optional]
 
 ### Return type

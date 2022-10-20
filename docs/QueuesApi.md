@@ -44,6 +44,9 @@ with butler.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = queues_api.QueuesApi(api_client)
     queue_id = "queueId_example" # str | ID of the queue
+    extra_results = [
+        "LineBlocks",
+    ] # [str] | Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default (optional)
     file = open('/path/to/file', 'rb') # file_type |  (optional)
 
     # example passing only required values which don't have defaults set
@@ -58,7 +61,7 @@ with butler.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Upload a single document to the queue specified by <queueId> and returns the extracted results
-        api_response = api_instance.extract_document(queue_id, file=file)
+        api_response = api_instance.extract_document(queue_id, extra_results=extra_results, file=file)
         pprint(api_response)
     except butler.ApiException as e:
         print("Exception when calling QueuesApi->extract_document: %s\n" % e)
@@ -70,6 +73,7 @@ with butler.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **queue_id** | **str**| ID of the queue |
+ **extra_results** | **[str]**| Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default | [optional]
  **file** | **file_type**|  | [optional]
 
 ### Return type
@@ -137,7 +141,7 @@ with butler.ApiClient(configuration) as api_client:
     sort_order = SortOrder("Asc") # SortOrder | Sort order. Default is ascending order. (optional)
     extra_results = [
         "LineBlocks",
-    ] # [str] | Which extra results you want to load, if any. These are lower-level results that you may use in your own post-processing. Omitted by default (optional)
+    ] # [str] | Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default (optional)
     sort_by = ExtractionResultsSortBy("DocumentId") # ExtractionResultsSortBy | Attribute to sort by. Default is DocumentId (optional)
 
     # example passing only required values which don't have defaults set
@@ -169,7 +173,7 @@ Name | Type | Description  | Notes
  **before_id** | **str**| Fetch a page of results before this ID | [optional]
  **limit** | **float**| Number of results per page | [optional]
  **sort_order** | **SortOrder**| Sort order. Default is ascending order. | [optional]
- **extra_results** | **[str]**| Which extra results you want to load, if any. These are lower-level results that you may use in your own post-processing. Omitted by default | [optional]
+ **extra_results** | **[str]**| Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default | [optional]
  **sort_by** | **ExtractionResultsSortBy**| Attribute to sort by. Default is DocumentId | [optional]
 
 ### Return type
@@ -228,6 +232,9 @@ with butler.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = queues_api.QueuesApi(api_client)
     queue_id = "queueId_example" # str | ID of the queue
+    extra_results = [
+        "LineBlocks",
+    ] # [str] | Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default (optional)
     files = open('/path/to/file', 'rb') # [file_type] |  (optional)
 
     # example passing only required values which don't have defaults set
@@ -242,7 +249,7 @@ with butler.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # Upload documents to the queue specified by <queueId> for processing
-        api_response = api_instance.upload_documents_to_queue(queue_id, files=files)
+        api_response = api_instance.upload_documents_to_queue(queue_id, extra_results=extra_results, files=files)
         pprint(api_response)
     except butler.ApiException as e:
         print("Exception when calling QueuesApi->upload_documents_to_queue: %s\n" % e)
@@ -254,6 +261,7 @@ with butler.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **queue_id** | **str**| ID of the queue |
+ **extra_results** | **[str]**| Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default | [optional]
  **files** | **[file_type]**|  | [optional]
 
 ### Return type
