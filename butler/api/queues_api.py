@@ -57,6 +57,7 @@ class QueuesApi(object):
                 queue_id (str): ID of the queue
 
             Keyword Args:
+                extra_results ([str]): Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default. [optional]
                 file (file_type): [optional]
                 _return_http_data_only (bool): response data without head status
                     code and headers. Default is True.
@@ -120,6 +121,7 @@ class QueuesApi(object):
             params_map={
                 'all': [
                     'queue_id',
+                    'extra_results',
                     'file',
                 ],
                 'required': [
@@ -128,30 +130,46 @@ class QueuesApi(object):
                 'nullable': [
                 ],
                 'enum': [
+                    'extra_results',
                 ],
                 'validation': [
+                    'extra_results',
                 ]
             },
             root_map={
                 'validations': {
+                    ('extra_results',): {
+
+                    },
                 },
                 'allowed_values': {
+                    ('extra_results',): {
+
+                        "LINEBLOCKS": "LineBlocks",
+                        "FORMFIELDS": "FormFields",
+                        "TABLES": "Tables"
+                    },
                 },
                 'openapi_types': {
                     'queue_id':
                         (str,),
+                    'extra_results':
+                        ([str],),
                     'file':
                         (file_type,),
                 },
                 'attribute_map': {
                     'queue_id': 'queueId',
+                    'extra_results': 'extraResults',
                     'file': 'file',
                 },
                 'location_map': {
                     'queue_id': 'path',
+                    'extra_results': 'query',
                     'file': 'form',
                 },
                 'collection_format_map': {
+                    'extra_results': 'multi',
                 }
             },
             headers_map={
@@ -189,7 +207,7 @@ class QueuesApi(object):
                 before_id (str): Fetch a page of results before this ID. [optional]
                 limit (float): Number of results per page. [optional]
                 sort_order (SortOrder): Sort order. Default is ascending order.. [optional]
-                extra_results ([str]): Which extra results you want to load, if any. These are lower-level results that you may use in your own post-processing. Omitted by default. [optional]
+                extra_results ([str]): Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default. [optional]
                 sort_by (ExtractionResultsSortBy): Attribute to sort by. Default is DocumentId. [optional]
                 _return_http_data_only (bool): response data without head status
                     code and headers. Default is True.
@@ -359,6 +377,7 @@ class QueuesApi(object):
                 queue_id (str): ID of the queue
 
             Keyword Args:
+                extra_results ([str]): Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default. [optional]
                 files ([file_type]): [optional]
                 _return_http_data_only (bool): response data without head status
                     code and headers. Default is True.
@@ -422,6 +441,7 @@ class QueuesApi(object):
             params_map={
                 'all': [
                     'queue_id',
+                    'extra_results',
                     'files',
                 ],
                 'required': [
@@ -430,30 +450,46 @@ class QueuesApi(object):
                 'nullable': [
                 ],
                 'enum': [
+                    'extra_results',
                 ],
                 'validation': [
+                    'extra_results',
                 ]
             },
             root_map={
                 'validations': {
+                    ('extra_results',): {
+
+                    },
                 },
                 'allowed_values': {
+                    ('extra_results',): {
+
+                        "LINEBLOCKS": "LineBlocks",
+                        "FORMFIELDS": "FormFields",
+                        "TABLES": "Tables"
+                    },
                 },
                 'openapi_types': {
                     'queue_id':
                         (str,),
+                    'extra_results':
+                        ([str],),
                     'files':
                         ([file_type],),
                 },
                 'attribute_map': {
                     'queue_id': 'queueId',
+                    'extra_results': 'extraResults',
                     'files': 'files',
                 },
                 'location_map': {
                     'queue_id': 'path',
+                    'extra_results': 'query',
                     'files': 'form',
                 },
                 'collection_format_map': {
+                    'extra_results': 'multi',
                     'files': 'csv',
                 }
             },

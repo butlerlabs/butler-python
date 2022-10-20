@@ -290,6 +290,7 @@ class AppsApi(object):
                 app_id (str):
 
             Keyword Args:
+                extra_results ([str]): Which extra results to generate, if any. These are lower-level results that you may use in your own post-processing. Omitted by default. [optional]
                 files ([file_type]): [optional]
                 _return_http_data_only (bool): response data without head status
                     code and headers. Default is True.
@@ -353,6 +354,7 @@ class AppsApi(object):
             params_map={
                 'all': [
                     'app_id',
+                    'extra_results',
                     'files',
                 ],
                 'required': [
@@ -361,30 +363,46 @@ class AppsApi(object):
                 'nullable': [
                 ],
                 'enum': [
+                    'extra_results',
                 ],
                 'validation': [
+                    'extra_results',
                 ]
             },
             root_map={
                 'validations': {
+                    ('extra_results',): {
+
+                    },
                 },
                 'allowed_values': {
+                    ('extra_results',): {
+
+                        "LINEBLOCKS": "LineBlocks",
+                        "FORMFIELDS": "FormFields",
+                        "TABLES": "Tables"
+                    },
                 },
                 'openapi_types': {
                     'app_id':
                         (str,),
+                    'extra_results':
+                        ([str],),
                     'files':
                         ([file_type],),
                 },
                 'attribute_map': {
                     'app_id': 'appId',
+                    'extra_results': 'extraResults',
                     'files': 'files',
                 },
                 'location_map': {
                     'app_id': 'path',
+                    'extra_results': 'query',
                     'files': 'form',
                 },
                 'collection_format_map': {
+                    'extra_results': 'multi',
                     'files': 'csv',
                 }
             },

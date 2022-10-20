@@ -16,4 +16,5 @@
 # Import APIs into API package:
 from butler.api.apps_api import AppsApi
 from butler.api.auth_api import AuthApi
+from butler.api.models_api import ModelsApi
 from butler.api.queues_api import QueuesApi
