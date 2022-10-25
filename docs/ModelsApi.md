@@ -7,6 +7,8 @@ Method | HTTP request | Description
 [**create_custom_model**](ModelsApi.md#create_custom_model) | **POST** /api/models | 
 [**get_document_enhanced_results**](ModelsApi.md#get_document_enhanced_results) | **GET** /api/models/{id}/documents/{documentId}/enhanced_results | 
 [**get_model**](ModelsApi.md#get_model) | **GET** /api/models/{id} | 
+[**get_training_document**](ModelsApi.md#get_training_document) | **GET** /api/models/{id}/training_documents/{documentId} | 
+[**get_training_documents**](ModelsApi.md#get_training_documents) | **GET** /api/models/{id}/training_documents | 
 [**train_custom_model**](ModelsApi.md#train_custom_model) | **POST** /api/models/{id}/train | Train a model
 [**update_document_labels**](ModelsApi.md#update_document_labels) | **PUT** /api/models/{id}/documents/{documentId}/labels | Update labels for a specific document
 
@@ -251,6 +253,179 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Returns details of a model |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_training_document**
+> TrainingDocumentResultDto get_training_document(id, document_id)
+
+
+
+Get the details of a specific training document
+
+### Example
+
+* Bearer (JWT) Authentication (bearer):
+```python
+import time
+import butler
+from butler.api import models_api
+from butler.model.training_document_result_dto import TrainingDocumentResultDto
+from pprint import pprint
+# Defining the host is optional and defaults to https://app.butlerlabs.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = butler.Configuration(
+    host = "https://app.butlerlabs.ai"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): bearer
+configuration = butler.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
+
+# Enter a context with an instance of the API client
+with butler.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = models_api.ModelsApi(api_client)
+    id = "id_example" # str | The id of the model.
+    document_id = "documentId_example" # str | The id of the document.
+
+    # example passing only required values which don't have defaults set
+    try:
+        api_response = api_instance.get_training_document(id, document_id)
+        pprint(api_response)
+    except butler.ApiException as e:
+        print("Exception when calling ModelsApi->get_training_document: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**| The id of the model. |
+ **document_id** | **str**| The id of the document. |
+
+### Return type
+
+[**TrainingDocumentResultDto**](TrainingDocumentResultDto.md)
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns the details of a specific training document |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_training_documents**
+> PaginatedTrainingDocumentsDto get_training_documents(id)
+
+
+
+Get training documents for the specified model
+
+### Example
+
+* Bearer (JWT) Authentication (bearer):
+```python
+import time
+import butler
+from butler.api import models_api
+from butler.model.sort_order import SortOrder
+from butler.model.model_training_document_status import ModelTrainingDocumentStatus
+from butler.model.paginated_training_documents_dto import PaginatedTrainingDocumentsDto
+from butler.model.training_details_sort_by import TrainingDetailsSortBy
+from pprint import pprint
+# Defining the host is optional and defaults to https://app.butlerlabs.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = butler.Configuration(
+    host = "https://app.butlerlabs.ai"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): bearer
+configuration = butler.Configuration(
+    access_token = 'YOUR_BEARER_TOKEN'
+)
+
+# Enter a context with an instance of the API client
+with butler.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = models_api.ModelsApi(api_client)
+    id = "id_example" # str | The id of the model.
+    after_id = "afterId_example" # str | Fetch a page of results after this ID (optional)
+    before_id = "beforeId_example" # str | Fetch a page of results before this ID (optional)
+    limit = 3.14 # float | Number of results per page (optional)
+    sort_order = SortOrder("Asc") # SortOrder | Sort order. Default is ascending order. (optional)
+    sort_by = TrainingDetailsSortBy("CreatedAt") # TrainingDetailsSortBy | Attribute to sort by. Default is CreatedAt (optional)
+    document_status = ModelTrainingDocumentStatus("OcrInProgress") # ModelTrainingDocumentStatus | Training document status to filter by (optional)
+
+    # example passing only required values which don't have defaults set
+    try:
+        api_response = api_instance.get_training_documents(id)
+        pprint(api_response)
+    except butler.ApiException as e:
+        print("Exception when calling ModelsApi->get_training_documents: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        api_response = api_instance.get_training_documents(id, after_id=after_id, before_id=before_id, limit=limit, sort_order=sort_order, sort_by=sort_by, document_status=document_status)
+        pprint(api_response)
+    except butler.ApiException as e:
+        print("Exception when calling ModelsApi->get_training_documents: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**| The id of the model. |
+ **after_id** | **str**| Fetch a page of results after this ID | [optional]
+ **before_id** | **str**| Fetch a page of results before this ID | [optional]
+ **limit** | **float**| Number of results per page | [optional]
+ **sort_order** | **SortOrder**| Sort order. Default is ascending order. | [optional]
+ **sort_by** | **TrainingDetailsSortBy**| Attribute to sort by. Default is CreatedAt | [optional]
+ **document_status** | **ModelTrainingDocumentStatus**| Training document status to filter by | [optional]
+
+### Return type
+
+[**PaginatedTrainingDocumentsDto**](PaginatedTrainingDocumentsDto.md)
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns list of training documents for the specified model. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

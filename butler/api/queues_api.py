@@ -177,6 +177,7 @@ class QueuesApi(object):
                     'application/json'
                 ],
                 'content_type': [
+                    # We support both multipart file upload and json url upload, but this breaks the codegen. Removing the json flavor for now
                     'multipart/form-data'
                 ]
             },
@@ -498,6 +499,7 @@ class QueuesApi(object):
                     'application/json'
                 ],
                 'content_type': [
+                    # We support both multipart file upload and json url upload, but this breaks the codegen. Removing the json flavor for now
                     'multipart/form-data'
                 ]
             },
