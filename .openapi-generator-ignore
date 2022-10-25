@@ -29,3 +29,6 @@ README.md
 requirements.txt
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
+
+# Ignore manually created models
+butler/additional_models/annotations.py

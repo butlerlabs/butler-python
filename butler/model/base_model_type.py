@@ -51,8 +51,11 @@ class BaseModelType(ModelSimple):
         ('value',): {
             'INVOICEV2': "InvoiceV2",
             'INVOICE': "Invoice",
+            'PASSPORTV2': "PassportV2",
             'PASSPORT': "Passport",
+            'RECEIPTV2': "ReceiptV2",
             'RECEIPT': "Receipt",
+            'USDRIVERSLICENSEV2': "USDriversLicenseV2",
             'USDRIVERSLICENSE': "USDriversLicense",
             'HEALTHINSURANCECARD': "HealthInsuranceCard",
             'IDCARD': "IdCard",
@@ -115,10 +118,10 @@ class BaseModelType(ModelSimple):
         Note that value can be passed either in args or in kwargs, but not in both.
 
         Args:
-            args[0] (str):, must be one of ["InvoiceV2", "Invoice", "Passport", "Receipt", "USDriversLicense", "HealthInsuranceCard", "IdCard", "BankStatement", "PaySlip", "W2", "W9", "IRS1040Standard", "Mortgage", "Utility", "LegacyCustom", "CustomForm", "Composed", ]  # noqa: E501
+            args[0] (str):, must be one of ["InvoiceV2", "Invoice", "PassportV2", "Passport", "ReceiptV2", "Receipt", "USDriversLicenseV2", "USDriversLicense", "HealthInsuranceCard", "IdCard", "BankStatement", "PaySlip", "W2", "W9", "IRS1040Standard", "Mortgage", "Utility", "LegacyCustom", "CustomForm", "Composed", ]  # noqa: E501
 
         Keyword Args:
-            value (str):, must be one of ["InvoiceV2", "Invoice", "Passport", "Receipt", "USDriversLicense", "HealthInsuranceCard", "IdCard", "BankStatement", "PaySlip", "W2", "W9", "IRS1040Standard", "Mortgage", "Utility", "LegacyCustom", "CustomForm", "Composed", ]  # noqa: E501
+            value (str):, must be one of ["InvoiceV2", "Invoice", "PassportV2", "Passport", "ReceiptV2", "Receipt", "USDriversLicenseV2", "USDriversLicense", "HealthInsuranceCard", "IdCard", "BankStatement", "PaySlip", "W2", "W9", "IRS1040Standard", "Mortgage", "Utility", "LegacyCustom", "CustomForm", "Composed", ]  # noqa: E501
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.

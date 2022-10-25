@@ -24,7 +24,12 @@ from butler.model_utils import (  # noqa: F401
 from butler.model.create_model_dto import CreateModelDto
 from butler.model.document_enhanced_result_dto import DocumentEnhancedResultDto
 from butler.model.model_info_dto import ModelInfoDto
+from butler.model.model_training_document_status import ModelTrainingDocumentStatus
+from butler.model.paginated_training_documents_dto import PaginatedTrainingDocumentsDto
 from butler.model.put_document_labels_dto import PutDocumentLabelsDto
+from butler.model.sort_order import SortOrder
+from butler.model.training_details_sort_by import TrainingDetailsSortBy
+from butler.model.training_document_result_dto import TrainingDocumentResultDto
 
 
 class ModelsApi(object):
@@ -405,6 +410,290 @@ class ModelsApi(object):
             },
             api_client=api_client,
             callable=__get_model
+        )
+
+        def __get_training_document(
+            self,
+            id,
+            document_id,
+            **kwargs
+        ):
+            """get_training_document  # noqa: E501
+
+            Get the details of a specific training document  # noqa: E501
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.get_training_document(id, document_id, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                id (str): The id of the model.
+                document_id (str): The id of the document.
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                TrainingDocumentResultDto
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['id'] = \
+                id
+            kwargs['document_id'] = \
+                document_id
+            return self.call_with_http_info(**kwargs)
+
+        self.get_training_document = _Endpoint(
+            settings={
+                'response_type': (TrainingDocumentResultDto,),
+                'auth': [
+                    'bearer'
+                ],
+                'endpoint_path': '/api/models/{id}/training_documents/{documentId}',
+                'operation_id': 'get_training_document',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'id',
+                    'document_id',
+                ],
+                'required': [
+                    'id',
+                    'document_id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'id':
+                        (str,),
+                    'document_id':
+                        (str,),
+                },
+                'attribute_map': {
+                    'id': 'id',
+                    'document_id': 'documentId',
+                },
+                'location_map': {
+                    'id': 'path',
+                    'document_id': 'path',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__get_training_document
+        )
+
+        def __get_training_documents(
+            self,
+            id,
+            **kwargs
+        ):
+            """get_training_documents  # noqa: E501
+
+            Get training documents for the specified model  # noqa: E501
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.get_training_documents(id, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                id (str): The id of the model.
+
+            Keyword Args:
+                after_id (str): Fetch a page of results after this ID. [optional]
+                before_id (str): Fetch a page of results before this ID. [optional]
+                limit (float): Number of results per page. [optional]
+                sort_order (SortOrder): Sort order. Default is ascending order.. [optional]
+                sort_by (TrainingDetailsSortBy): Attribute to sort by. Default is CreatedAt. [optional]
+                document_status (ModelTrainingDocumentStatus): Training document status to filter by. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                PaginatedTrainingDocumentsDto
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['id'] = \
+                id
+            return self.call_with_http_info(**kwargs)
+
+        self.get_training_documents = _Endpoint(
+            settings={
+                'response_type': (PaginatedTrainingDocumentsDto,),
+                'auth': [
+                    'bearer'
+                ],
+                'endpoint_path': '/api/models/{id}/training_documents',
+                'operation_id': 'get_training_documents',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'id',
+                    'after_id',
+                    'before_id',
+                    'limit',
+                    'sort_order',
+                    'sort_by',
+                    'document_status',
+                ],
+                'required': [
+                    'id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'id':
+                        (str,),
+                    'after_id':
+                        (str,),
+                    'before_id':
+                        (str,),
+                    'limit':
+                        (float,),
+                    'sort_order':
+                        (SortOrder,),
+                    'sort_by':
+                        (TrainingDetailsSortBy,),
+                    'document_status':
+                        (ModelTrainingDocumentStatus,),
+                },
+                'attribute_map': {
+                    'id': 'id',
+                    'after_id': 'afterId',
+                    'before_id': 'beforeId',
+                    'limit': 'limit',
+                    'sort_order': 'sortOrder',
+                    'sort_by': 'sortBy',
+                    'document_status': 'documentStatus',
+                },
+                'location_map': {
+                    'id': 'path',
+                    'after_id': 'query',
+                    'before_id': 'query',
+                    'limit': 'query',
+                    'sort_order': 'query',
+                    'sort_by': 'query',
+                    'document_status': 'query',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__get_training_documents
         )
 
         def __train_custom_model(
