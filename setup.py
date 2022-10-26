@@ -1,16 +1,15 @@
 """
-    Butler Python SDK
+Butler Python SDK
 
-    Provides functions to use Butler REST API easily.
+Provides functions to use Butler REST API easily.
 
-    Details on the API can be found here: https://docs.butlerlabs.ai/reference/welcome
+Details on the API can be found here: https://docs.butlerlabs.ai/reference/welcome
 """
-
-
-from setuptools import setup, find_packages  # noqa: H301
+from setuptools import find_packages, setup  # noqa: H301
 
 NAME = "butler-sdk"
-VERSION = "0.0.5"
+VERSION = "1.0.0"
+
 # To install the library, run the following
 #
 # python setup.py install
@@ -19,8 +18,9 @@ VERSION = "0.0.5"
 # http://pypi.python.org/pypi/setuptools
 
 REQUIRES = [
-  "urllib3 >= 1.25.3",
-  "python-dateutil",
+    "attrs>=21.3.0",
+    "httpx>=0.15.4,<0.24.0",
+    "python-dateutil~=2.8.1",
 ]
 
 setup(
@@ -30,15 +30,12 @@ setup(
     author="Butler Labs",
     author_email="support@butlerlabs.ai",
     url="https://butlerlabs.ai",
-    project_urls={
-      "Documentation": "https://docs.butlerlabs.ai/reference/welcome"
-    },
+    project_urls={"Documentation": "https://docs.butlerlabs.ai/reference/welcome"},
     keywords=["Butler", "AutoML", "OCR"],
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=REQUIRES,
-    packages=find_packages(exclude=["test", "tests"]),
-    include_package_data=True,
+    packages=find_packages(include=["butler"]),
     long_description="""\
            Welcome to Butler Python SDK # noqa: E501
-    """
+    """,
 )
