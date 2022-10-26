@@ -1,97 +1,101 @@
-from butler.api.queues_api import QueuesApi
-from butler.api.models_api import ModelsApi
+from typing import List, Optional
 
-from butler.api_client import ApiClient
-from butler.configuration import Configuration
-from butler.model.document_status import DocumentStatus
-from butler.model.extraction_results_dto import ExtractionResultsDto
-from butler.model.paginated_extraction_results_dto import PaginatedExtractionResultsDto
+from butler.additional_models import Annotations
+from butler.generated.api.models import get_model, get_training_document, get_training_documents
+from butler.generated.api.queues import extract_document
+from butler.generated.client import AuthenticatedClient
+from butler.generated.models import (
+    ExtractDocumentMultipartData,
+    ExtractionResultsDto,
+    PaginatedTrainingDocumentsDto,
+    TrainingDocumentResultDto,
+)
+from butler.generated.types import File
+from butler.utils import EmptyJsonBody, infer_file_name, infer_mime_type, verify_response_or_raise
 
-from butler.additional_models.annotations import Annotations
 
-class Client(ApiClient):
-    def __init__(self, api_key: str) -> None:
-        super().__init__(
-            configuration = Configuration(
-                access_token = api_key
-            )
+class Client:
+    def __init__(self, api_key: str, base_url: Optional[str] = None) -> None:
+        self._client = AuthenticatedClient(
+            base_url=base_url if base_url is not None else "https://app.butlerlabs.ai",
+            token=api_key,
+            timeout=60.0,
         )
 
-    def extract_document(self, file_path: str, queue_id: str) -> ExtractionResultsDto:
+    def extract_document(
+        self,
+        queue_id: str,
+        file_path: str,
+        file_name: Optional[str] = None,
+        mime_type: Optional[str] = None,
+    ) -> ExtractionResultsDto:
         """
         Uploads a supported file (PDF, PNG, and JPG) to the Butler API and fetches results
 
         Limitations: Function times out in 30 seconds, works on PDFs of sizes up to 5 pages
         """
-        with open(file_path, 'rb') as f:
-            return QueuesApi(self).extract_document(
-                queue_id = queue_id,
-                file = f
+        with open(file_path, "rb") as f:
+            file_name = file_name if file_name is not None else infer_file_name(f)
+            mime_type = mime_type if mime_type is not None else infer_mime_type(file_name)
+            return verify_response_or_raise(
+                extract_document.sync_detailed(
+                    client=self._client,
+                    queue_id=queue_id,
+                    multipart_data=ExtractDocumentMultipartData(
+                        file=File(
+                            payload=f,
+                            file_name=file_name,
+                            mime_type=mime_type,
+                        ),
+                    ),
+                    json_body=EmptyJsonBody(),
+                )
             )
 
     def _get_training_documents(
-      self,
-      models_api: ModelsApi, 
-      model_id: str, 
-      after_id: str
-    ):
-      if after_id:
-        return models_api.get_training_documents(
-          id = model_id,
-          after_id = after_id,
-          _check_return_type = False
-        )
-      else:
-        return models_api.get_training_documents(
-          id = model_id,
-          _check_return_type = False
+        self,
+        model_id: str,
+        after_id: Optional[str],
+    ) -> PaginatedTrainingDocumentsDto:
+        return verify_response_or_raise(
+            get_training_documents.sync_detailed(client=self._client, id=model_id, after_id=after_id)
         )
 
     def load_annotations(
-      self, 
-      model_id: str, 
-      load_all_documents: bool = False
+        self,
+        model_id: str,
+        load_all_documents: bool = False,
     ) -> Annotations:
-      '''
-      Loads annotations from a model using the Butler API
-      '''
-      models_api = ModelsApi(self)
-      # First load the model details so the schema can be passed to the Annotations object
-      model_details = models_api.get_model(
-        id = model_id,
-        _check_return_type = False
-      )
+        """
+        Loads annotations from a model using the Butler API
+        """
+        # First load the model details so the schema can be passed to the Annotations object
+        model_details = verify_response_or_raise(get_model.sync_detailed(client=self._client, id=model_id))
 
-      training_document_details_list = []
+        training_docs_list: List[TrainingDocumentResultDto] = []
 
-      should_fetch_more_docs = True
-      after_id = None
-      while (should_fetch_more_docs):
-        # Fetch the next batch of training documents
-        training_docs_response = self._get_training_documents(
-          models_api,
-          model_id,
-          after_id
+        should_fetch_more_docs = True
+        after_id = None
+        while should_fetch_more_docs:
+            # Fetch the next batch of training documents
+            training_docs_page = self._get_training_documents(model_id, after_id)
+
+            # Get details for each training document, which includes the annotations
+            for training_doc in training_docs_page.items:
+                training_doc_details = verify_response_or_raise(
+                    get_training_document.sync_detailed(
+                        client=self._client,
+                        id=model_id,
+                        document_id=training_doc.document_id,
+                    ),
+                )
+                training_docs_list.append(training_doc_details)
+
+            # Determine if we should fetch more documents
+            after_id = training_docs_page.items[-1].document_id
+            should_fetch_more_docs = load_all_documents and training_docs_page.has_next
+
+        return Annotations(
+            model_details=model_details,
+            training_documents=training_docs_list,
         )
-        
-        training_docs = training_docs_response['items']
-
-        # Get details for each training document, which includes the annotations
-        for training_doc in training_docs:
-          document_id = training_doc['documentId']
-          training_doc_details = models_api.get_training_document(
-            id = model_id,
-            document_id = document_id,
-            _check_return_type = False
-          )
-          training_document_details_list.append(training_doc_details)
-
-        # Determine if we should fetch more documents
-        has_next = training_docs_response['has_next']
-        after_id = training_docs_response['items'][-1]['documentId']
-        should_fetch_more_docs = load_all_documents and has_next
-
-      return Annotations(
-        model_details = model_details,
-        training_documents = training_document_details_list
-      )

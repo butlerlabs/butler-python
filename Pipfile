@@ -4,11 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-python-dateutil = ">=2.5.3"
-urllib3 = ">=1.25.3"
+attrs = ">=21.3.0"
+httpx = ">=0.15.4,<0.24.0"
+python-dateutil = "~=2.8.1"
 
 [dev-packages]
+black = "*"
 build = "*"
+isort = "~=5.0.5"
+openapi-python-client = "==0.11.6"
 twine = "*"
 
 [requires]
