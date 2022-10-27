@@ -1,6 +1,7 @@
+import logging
 from typing import List, Optional
 
-from butler.additional_models import Annotations
+from butler.annotations.annotations import Annotations
 from butler.generated.api.models import get_model, get_training_document, get_training_documents
 from butler.generated.api.queues import extract_document
 from butler.generated.client import AuthenticatedClient
@@ -10,6 +11,7 @@ from butler.generated.models import (
     PaginatedTrainingDocumentsDto,
     TrainingDocumentResultDto,
 )
+from butler.generated.models.model_training_document_status import ModelTrainingDocumentStatus
 from butler.generated.types import File
 from butler.utils import EmptyJsonBody, infer_file_name, infer_mime_type, verify_response_or_raise
 
@@ -56,29 +58,35 @@ class Client:
         self,
         model_id: str,
         after_id: Optional[str],
+        document_status: ModelTrainingDocumentStatus = ModelTrainingDocumentStatus.LABELED,
     ) -> PaginatedTrainingDocumentsDto:
         return verify_response_or_raise(
-            get_training_documents.sync_detailed(client=self._client, id=model_id, after_id=after_id)
+            get_training_documents.sync_detailed(
+                client=self._client, id=model_id, after_id=after_id, document_status=document_status
+            )
         )
 
     def load_annotations(
         self,
         model_id: str,
-        load_all_documents: bool = False,
+        load_all_pages: bool = False,
+        document_status: ModelTrainingDocumentStatus = ModelTrainingDocumentStatus.LABELED,
     ) -> Annotations:
         """
         Loads annotations from a model using the Butler API
         """
         # First load the model details so the schema can be passed to the Annotations object
+        logging.info("Loading model details")
         model_details = verify_response_or_raise(get_model.sync_detailed(client=self._client, id=model_id))
 
         training_docs_list: List[TrainingDocumentResultDto] = []
 
         should_fetch_more_docs = True
         after_id = None
+        logging.info("Loading training documents")
         while should_fetch_more_docs:
             # Fetch the next batch of training documents
-            training_docs_page = self._get_training_documents(model_id, after_id)
+            training_docs_page = self._get_training_documents(model_id, after_id, document_status=document_status)
 
             # Get details for each training document, which includes the annotations
             for training_doc in training_docs_page.items:
@@ -91,10 +99,13 @@ class Client:
                 )
                 training_docs_list.append(training_doc_details)
 
+            logging.info("Loaded %d of %d training documents", len(training_docs_list), training_docs_page.total_count)
+
             # Determine if we should fetch more documents
             after_id = training_docs_page.items[-1].document_id
-            should_fetch_more_docs = load_all_documents and training_docs_page.has_next
+            should_fetch_more_docs = load_all_pages and training_docs_page.has_next
 
+        logging.info("Creating Annotations")
         return Annotations(
             model_details=model_details,
             training_documents=training_docs_list,
