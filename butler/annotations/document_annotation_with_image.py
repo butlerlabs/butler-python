@@ -37,9 +37,7 @@ class DocumentAnnotationWithImage(TrainingDocumentResultDto):
 
         if len(images) > 1:
             logging.warning(
-                "Found {} pages in document {}. Multi-page documents are not supported. Using first page.".format(
-                    len(images), self.id
-                )
+                f"Found {len(images)} pages in document {self.document_id}. Multi-page documents are not supported. Using first page."
             )
 
         self.image = images[0]

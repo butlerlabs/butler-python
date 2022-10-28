@@ -11,8 +11,8 @@ logging.basicConfig(level=logging.INFO)
 # Get API Key from https://docs.butlerlabs.ai/reference/uploading-documents-to-the-rest-api#get-your-api-key
 api_key = os.environ["BUTLER_API_KEY"]
 
-# Find your model's id
-model_id = "ed7e0c2c-9150-4d5c-b739-06a161bbdbb3"
+# Find your model's uuid
+model_id = "00000000-0000-0000-0000-000000000000"
 
 annotations = Client(api_key).load_annotations(
     model_id,

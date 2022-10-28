@@ -6,9 +6,9 @@ name = "pypi"
 [packages]
 attrs = ">=21.3.0"
 httpx = ">=0.15.4,<0.24.0"
-python-dateutil = "~=2.8.1"
 pdf2image = "*"
 pillow = "*"
+python-dateutil = "~=2.8.1"
 
 [dev-packages]
 black = "*"
