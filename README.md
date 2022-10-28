@@ -1,13 +1,16 @@
 # Butler
+
 Welcome to [Butler's Python SDK](https://butlerlabs.ai)
 
       Butler APIs are built on top of the OpenAPI 3.0 standard, and the SDK provides convenience
       functions to make programming easier
 
 ## Requirements.
+
 Python >= 3.7
 
 ## Installation & Usage
+
 ### pip install
 
 ```sh
@@ -32,14 +35,19 @@ print(response)
 ```
 
 ## Maintain
+
 ```sh
-pipenv install
+PIPENV_VENV_IN_PROJECT=1 pipenv install
+
+pipenv install -d
 ```
 
 To regenerate code to account for updates to REST API:
+
 ```sh
 openapi-python-client update --url https://app.butlerlabs.ai/api/docs-json --config codegen.yaml
 ```
+
 and make manual updates to `butler/__init.py__` if needed
 
 To publish a new version:
