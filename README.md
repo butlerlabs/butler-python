@@ -37,9 +37,7 @@ print(response)
 ## Maintain
 
 ```sh
-PIPENV_VENV_IN_PROJECT=1 pipenv install
-
-pipenv install -d
+PIPENV_VENV_IN_PROJECT=1 pipenv install -d
 ```
 
 To regenerate code to account for updates to REST API:
