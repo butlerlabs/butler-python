@@ -35,6 +35,6 @@ def load_file_as_img(file_url: str, mime_type: Optional[str] = None) -> List[Ima
     if mime_type in SUPPORTED_IMG_MIME_TYPES:
         return [Image.open(BytesIO(response.content))]
     elif mime_type == "application/pdf":
-        return convert_from_bytes(response.raw.read())
+        return convert_from_bytes(response.content)
     else:
         raise ValueError(f"Unsupported mime type: {mime_type}")

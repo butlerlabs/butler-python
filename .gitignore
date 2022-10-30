@@ -1,2 +1,4 @@
-.venv/
+.venv
 **/__pycache__/**
+dist
+butler_sdk.egg-info

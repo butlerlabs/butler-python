@@ -20,6 +20,8 @@ VERSION = "1.0.0"
 REQUIRES = [
     "attrs>=21.3.0",
     "httpx>=0.15.4,<0.24.0",
+    "pdf2image",
+    "pillow",
     "python-dateutil~=2.8.1",
 ]
 
@@ -34,7 +36,8 @@ setup(
     keywords=["Butler", "AutoML", "OCR"],
     python_requires=">=3.7",
     install_requires=REQUIRES,
-    packages=find_packages(include=["butler"]),
+    packages=find_packages(),
+    include_package_data=True,
     long_description="""\
            Welcome to Butler Python SDK # noqa: E501
     """,
