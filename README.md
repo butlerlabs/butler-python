@@ -29,9 +29,16 @@ from butler import Client
 api_key = '<api-key>'
 # Get Queue ID from https://docs.butlerlabs.ai/reference/uploading-documents-to-the-rest-api#go-to-the-model-details-page
 queue_id = '<queue_id>'
+# Path to a local JPEG, PNG, or PDF file
+local_file_path = 'example.pdf'
 
-response = Client(api_key).extract_document(queue_id, 'example.pdf')
+response = Client(api_key).extract_document(queue_id, local_file_path)
 print(response)
+```
+
+If you are on version 0.0.5 of the SDK or older you will need a slight modification:
+```python
+response = Client(api_key).extract_document(local_file_path, queue_id)
 ```
 
 ## Maintain
