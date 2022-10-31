@@ -66,6 +66,9 @@ python -m build
 # upload to test pypi
 python -m twine upload --repository testpypi --skip-existing dist/* --verbose
 
+# test install from test pypi
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple butler-sdk
+
 # Upload to real pypi if things checkout
 python -m twine upload --skip-existing dist/* --verbose
 ```
