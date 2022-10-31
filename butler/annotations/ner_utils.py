@@ -1,4 +1,5 @@
-from typing import Dict, List, MutableSet, TypedDict
+import sys
+from typing import Dict, List, Set
 
 from PIL.Image import Image
 
@@ -6,6 +7,11 @@ from butler.annotations.bbx_utils import butler_bbx_to_min_max
 from butler.annotations.document_annotation_with_image import DocumentAnnotationWithImage
 from butler.generated.models import ModelColumnDto, ModelFieldDto, ModelInfoDto, SimpleFieldLabeledResultDto
 from butler.generated.models.block_result_dto import BlockResultDto
+
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 
 
 def get_ner_tags_for_field(field: ModelFieldDto, as_iob=True) -> List[str]:
@@ -56,7 +62,7 @@ class ModelNerTags(TypedDict):
     tags: List[str]
 
 
-def assert_unique_tags(tags: List[str], tag_set: MutableSet[str]):
+def assert_unique_tags(tags: List[str], tag_set: Set[str]):
     """
     Asserts that the tags are unique.
 
@@ -64,7 +70,7 @@ def assert_unique_tags(tags: List[str], tag_set: MutableSet[str]):
     ----------
     tags: List[str]
         The tags to check.
-    tag_set: MutableSet[str]
+    tag_set: Set[str]
         The set of tags that have already been checked.
     """
     for tag in tags:
@@ -82,7 +88,7 @@ def get_ner_tags_for_model(model_details: ModelInfoDto, as_iob: bool = True) -> 
         The model details to get the NER tags for.
     """
     ner_tags = {"fields": {}, "tables": {}}
-    tags_set: MutableSet[str] = set()
+    tags_set: Set[str] = set()
 
     # Add each fields ner tags
     for field in model_details.fields:

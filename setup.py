@@ -23,6 +23,7 @@ REQUIRES = [
     "pdf2image",
     "pillow",
     "python-dateutil~=2.8.1",
+    "typing_extensions",
 ]
 
 setup(
